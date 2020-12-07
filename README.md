@@ -152,3 +152,121 @@ new AwsFileUpload(options) //options = {}
       })
     }
 ```
+
+
+# Backend Code (Laravel)
+```php
+<?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class TestController extends Controller
+{
+ 
+
+    public function successResponse($data, $msg = null)
+    {
+        return new JsonResponse([
+            "success" => true,
+            "status_code" => 200,
+            "data" => $data,
+            "message" => $msg,
+        ]);
+    }
+
+    function errorResponse($msg = null, $errors = [], $code = 500)
+    {
+        return new JsonResponse([
+            "success" => false,
+            "status_code" => $code,
+            "errors" => $errors,
+            "message" => $msg,
+        ]);
+    }
+
+
+
+    public function upload()
+    {
+        return $this->successResponse([
+            "url" => (string) s3PutObjectSignedRequest(request('fileName'))->getUri()
+        ]);
+    }
+
+
+    public function uploadStart (){
+        $apiKey =  env('AWS_ACCESS_KEY_ID');
+        $secret =  env('AWS_SECRET_ACCESS_KEY');
+        $bucket =  env('AWS_BUCKET');
+        try {
+            $s3 = s3Client($apiKey, $secret);
+            $result = $s3->createMultipartUpload([
+                'Bucket'       => $bucket,
+                'Key'          => request('fileName'),
+                'ACL'          => 'public-read',
+            ]);
+            $uploadId = $result['UploadId'];
+            return $this->successResponse([
+                "uploadId" => $uploadId
+            ]);
+        } catch (\Throwable $th) {
+            // return $this->errorResponse("failed to initiate upload.");
+            return $this->errorResponse($th->getMessage());
+        }
+    }
+
+
+    public function signedUrl(){
+        $apiKey =  env('AWS_ACCESS_KEY_ID');
+        $secret =  env('AWS_SECRET_ACCESS_KEY');
+        $bucket =  env('AWS_BUCKET');
+        try {
+            $s3 = s3Client($apiKey, $secret);
+            $cmd = $s3->getCommand('UploadPart', array(
+                'Bucket' => $bucket,
+                'Key' => request('fileName'),
+                'PartNumber' => request('partNumber'),
+                'UploadId' => request('uploadId'),
+            ));
+
+            $url = $s3->createPresignedRequest($cmd, '+20 minutes')->getUri();
+            return $this->successResponse([
+                "url" => (string) $url
+            ]);
+        } catch (\Throwable $th) {
+            // return $this->errorResponse("failed to generate signedurl.");
+            return $this->errorResponse($th->getMessage());
+
+        }
+    }
+
+
+    public function complete(){
+        $apiKey =  env('AWS_ACCESS_KEY_ID');
+        $secret =  env('AWS_SECRET_ACCESS_KEY');
+        $bucket =  env('AWS_BUCKET');
+        $params = [
+            'Bucket'       => $bucket,
+            'Key'          => request('fileName'),
+            'UploadId' => request('uploadId'),
+            'MultipartUpload' => [
+                'Parts' => request('parts')
+            ],
+        ];
+        try {
+            $s3 = s3Client($apiKey, $secret);
+            $result = $s3->completeMultipartUpload($params);
+            $location =  $result['Location'];
+            return $this->successResponse([
+                "url" => $location
+            ]);
+        } catch (\Throwable $th) {
+            throw ($th);
+            return $this->errorResponse("failed to complete.");
+        }
+    }
+}
+?>
+```
