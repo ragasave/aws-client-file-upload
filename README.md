@@ -100,16 +100,16 @@ new AwsFileUpload(options) //options = {}
       var upload = new AwsFileUpload({
         fileName: file.name,
         multipartsignedUrlRequest: {
-          url: 'http://unity-of-hindu.com/api/multipart/signedurl',
+          url: 'http://localhost/api/multipart/signedurl',
           method: "POST",
         },
         uploadIdRequest: {
-          url: 'http://unity-of-hindu.com/api/multipart/start',
+          url: 'http://localhost/api/multipart/start',
           method: "POST",
         },
         completeMultipartRequest: {
           method: "POST",
-          url: 'http://unity-of-hindu.com/api/multipart/complete'
+          url: 'http://localhost/api/multipart/complete'
         },
         chunkSize: 6000000,
         file: file,
@@ -135,16 +135,16 @@ new AwsFileUpload(options) //options = {}
           method: "POST",
         },
         multipartsignedUrlRequest: {
-          url: 'http://unity-of-hindu.com/api/multipart/signedurl',
+          url: 'http://localhost/api/multipart/signedurl',
           method: "POST",
         },
         uploadIdRequest: {
-          url: 'http://unity-of-hindu.com/api/multipart/start',
+          url: 'http://localhost/api/multipart/start',
           method: "POST",
         },
         completeMultipartRequest: {
           method: "POST",
-          url: 'http://unity-of-hindu.com/api/multipart/complete'
+          url: 'http://localhost/api/multipart/complete'
         },
         chunkSize: 6000000,
         file: file,
