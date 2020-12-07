@@ -2,9 +2,15 @@
 # aws-client-file-upload
 Upload files from browser (Client Side) in Aws S3 Bucket via signed url. it supports both multipart and single upload
 
+## CDN
+```
+https://cdn.jsdelivr.net/gh/ragasave/aws-client-file-upload@v1/dist/bundle.js
+```
+
 ## Get Start
 This library provides an simple and single method to upload file on your aws s3 bucket from your browser or client side. it uses `signed url` to upload file.
 To upload file you just have to use `AwsFileUpload` method.
+
 
 **Syntax:**
 ```js
