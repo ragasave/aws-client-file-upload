@@ -12,7 +12,7 @@
 
   <script src="./bundle.js"></script>
   <script>
-    var url = 'http://unity-of-hindu.com/api/upload';
+    var url = 'http://localhost/api/upload';
     // window.file = await AwsFileUpload.File();
 
     var fileElem = document.getElementById('file');
@@ -25,16 +25,16 @@
           method: "POST",
         },
         multipartsignedUrlRequest: {
-          url: 'http://unity-of-hindu.com/api/multipart/signedurl',
+          url: 'http://localhost/api/multipart/signedurl',
           method: "POST",
         },
         uploadIdRequest: {
-          url: 'http://unity-of-hindu.com/api/multipart/start',
+          url: 'http://localhost/api/multipart/start',
           method: "POST",
         },
         completeMultipartRequest: {
           method: "POST",
-          url: 'http://unity-of-hindu.com/api/multipart/complete'
+          url: 'http://localhost/api/multipart/complete'
         },
         uploadId: 1,
         chunkSize: 6000000,
