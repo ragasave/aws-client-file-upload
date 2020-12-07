@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Getting Started</title>
+</head>
+
+<body>
+
+  <input type="file" name="" onchange="upload" id="file">
+
+  <script src="./bundle.js"></script>
+  <script>
+    var url = 'http://unity-of-hindu.com/api/upload';
+    // window.file = await AwsFileUpload.File();
+
+    var fileElem = document.getElementById('file');
+    function upload() {
+      var file = fileElem.files[0];
+      var upload = new AwsFileUpload({
+        fileName: file.name,
+        signedUrlRequest: {
+          url: url,
+          method: "POST",
+        },
+        multipartsignedUrlRequest: {
+          url: 'http://unity-of-hindu.com/api/multipart/signedurl',
+          method: "POST",
+        },
+        uploadIdRequest: {
+          url: 'http://unity-of-hindu.com/api/multipart/start',
+          method: "POST",
+        },
+        completeMultipartRequest: {
+          method: "POST",
+          url: 'http://unity-of-hindu.com/api/multipart/complete'
+        },
+        uploadId: 1,
+        chunkSize: 6000000,
+        file: file,
+        multipartUpload: 'auto',
+        onSuccess: function () {
+          alert('file uploaded.');
+        },
+        onError: function(error){
+          alert(error.message)
+        }
+      })
+    }
+
+
+
+  </script>
+</body>
+
+</html>
