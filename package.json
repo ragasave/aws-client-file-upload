@@ -2,14 +2,28 @@
   "name": "aws-client-file-upload",
   "version": "1.0.0",
   "description": "Upload file from browser in s3 bucket via signedurl",
-  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch"
   },
-  "keywords": [],
-  "author": "",
+  "homepage" : "http://ragasave.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ragasave/aws-client-file-upload.git"
+  },
+  "keywords": [
+    "aws",
+    "javascript",
+    "browser",
+    "library",
+    "aws upload",
+    "file upload",
+    "presigned url s3",
+    "ragasave",
+    "rahul varma"
+  ],
+  "author": "Rahul Varma",
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.20"
