@@ -7,7 +7,7 @@
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch"
   },
-  "homepage" : "http://ragasave.com/",
+  "homepage" : "https://ragasave.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/ragasave/aws-client-file-upload.git"
